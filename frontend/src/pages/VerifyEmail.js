@@ -5,10 +5,10 @@ import userApi from "../api/userApi";
 export default function VerifyEmail() {
   const [status, setStatus] = useState("Verifying...");
   const [params] = useSearchParams();
-  const hasRun = useRef(false); // 🔑 IMPORTANT
+  const hasRun = useRef(false);
 
   useEffect(() => {
-    if (hasRun.current) return;   // ⛔ stop second run
+    if (hasRun.current) return;   
     hasRun.current = true;
 
     const token = params.get("token");

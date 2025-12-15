@@ -8,7 +8,6 @@ require("dotenv").config();
 
 const app = express();
 
-// CORS CONFIG (Frontend on localhost:3000)
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -16,20 +15,18 @@ app.use(
   })
 );
 
-// Body Parser
 app.use(express.json());
 
 // Connect DB
 connectDB();
 
-// Test Route
 app.get("/", (req, res) => {
   res.send("Pizza App Backend Running");
 });
 
 // API Routes
-app.use("/api/auth", authRoutes);     // Auth routes
-app.use("/api/pizzas", pizzaRoutes);  // Pizza routes
+app.use("/api/auth", authRoutes);    
+app.use("/api/pizzas", pizzaRoutes);  
 app.use("/api/orders", orderRoutes);
 app.use("/api/admin", require("./routes/admin"));
 

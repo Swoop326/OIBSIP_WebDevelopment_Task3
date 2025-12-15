@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const router = express.Router();
 
-/* -------------------------------- REGISTER -------------------------------- */
+// Register Route
 router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -54,7 +54,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-/* ------------------------------ VERIFY EMAIL ------------------------------ */
+// Verify Email Route
 router.get("/verify-email", async (req, res) => {
   try {
     const { token, email } = req.query;
@@ -65,7 +65,6 @@ router.get("/verify-email", async (req, res) => {
       return res.status(400).json({ message: "Invalid verification link" });
     }
 
-    // Already verified → still return success
     if (user.emailVerified) {
       return res.status(200).json({ message: "Email already verified" });
     }
@@ -85,7 +84,7 @@ router.get("/verify-email", async (req, res) => {
   }
 });
 
-/* ---------------------------------- LOGIN --------------------------------- */
+// Login Route
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -126,7 +125,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-/* --------------------------- FORGOT PASSWORD --------------------------- */
+// Forgot Password Route
 router.post("/forgot-password", async (req, res) => {
   try {
     const { email } = req.body;
@@ -159,7 +158,7 @@ router.post("/forgot-password", async (req, res) => {
   }
 });
 
-/* ----------------------------- RESET PASSWORD ----------------------------- */
+//Reset Password Route
 router.post("/reset-password", async (req, res) => {
   try {
     const { token, email, newPassword } = req.body;

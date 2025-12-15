@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import userApi from "../api/userApi"; // ✅ FIXED
+import userApi from "../api/userApi"; 
 
 export default function Register() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import userApi from "../api/userApi"; // ✅ FIXED
+import userApi from "../api/userApi"; 
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");

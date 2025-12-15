@@ -7,21 +7,21 @@ const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
-/* ---------------- AUTH MIDDLEWARE ---------------- */
+// Middleware
 function auth(req, res, next) {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) return res.status(401).json({ message: "No token" });
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // { id, email, isAdmin }
+    req.user = decoded; 
     next();
   } catch {
     return res.status(401).json({ message: "Invalid token" });
   }
 }
 
-/* ---------------- CREATE ORDER (MOCK PAYMENT) ---------------- */
+// Create Order
 router.post("/create", auth, async (req, res) => {
   try {
     const { pizzaId, base, sauce, cheese, veggies, totalPrice } = req.body;
@@ -48,14 +48,13 @@ router.post("/create", auth, async (req, res) => {
       veggies,
 
       totalPrice,
-      paymentStatus: "PAID", // ✅ MOCK PAYMENT SUCCESS
+      paymentStatus: "PAID", 
       orderStatus: "PLACED",
     });
 
-    // Save order
     await order.save();
 
-    /* ---------------- INVENTORY DEDUCTION + LOW STOCK ALERT ---------------- */
+    // Invetory Deduction 
     try {
       const LOW_STOCK_THRESHOLD = 20;
 
@@ -75,7 +74,7 @@ router.post("/create", auth, async (req, res) => {
           { new: true }
         );
 
-        // 🔔 Low stock email alert
+        // Low stock email alert
         if (updatedItem && updatedItem.quantity <= LOW_STOCK_THRESHOLD) {
           await sendEmail(
             process.env.ADMIN_EMAIL,
@@ -93,7 +92,6 @@ router.post("/create", auth, async (req, res) => {
       console.error("Inventory / Low-stock check failed:", invErr);
     }
 
-    // Final response
     res.status(201).json({
       message: "Order placed successfully",
       orderId: order._id,

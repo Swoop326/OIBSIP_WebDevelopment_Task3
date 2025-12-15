@@ -19,16 +19,13 @@ export default function AdminLogin() {
         password,
       });
 
-      // 🚫 BLOCK non-admin users
       if (!res.data.user?.isAdmin) {
         setError("You are not authorized as admin");
         return;
       }
 
-      // 🔐 Clear USER session
       localStorage.removeItem("token");
-
-      // 👑 Save ADMIN token
+    
       localStorage.setItem("adminToken", res.data.token);
 
       navigate("/admin-dashboard");

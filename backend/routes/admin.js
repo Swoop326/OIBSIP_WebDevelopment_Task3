@@ -5,9 +5,7 @@ const adminAuth = require("../middleware/adminAuth");
 const Order = require("../models/Order");
 const Inventory = require("../models/Inventory");
 
-/**
- * GET all orders (Admin only)
- */
+//Get all orders
 router.get("/orders", adminAuth, async (req, res) => {
   try {
     const orders = await Order.find()
@@ -21,9 +19,7 @@ router.get("/orders", adminAuth, async (req, res) => {
   }
 });
 
-/**
- * UPDATE order status (Admin only)
- */
+// Update Order Status
 router.put("/orders/:id/status", adminAuth, async (req, res) => {
   try {
     const { status } = req.body;
@@ -47,7 +43,6 @@ router.put("/orders/:id/status", adminAuth, async (req, res) => {
     order.orderStatus = status;
     await order.save();
 
-    // ✅ RETURN UPDATED ORDER
     res.json({
       msg: "Order status updated successfully",
       order,
@@ -58,9 +53,7 @@ router.put("/orders/:id/status", adminAuth, async (req, res) => {
   }
 });
 
-/**
- * GET inventory (Admin only)
- */
+// Get Inventory
 router.get("/inventory", adminAuth, async (req, res) => {
   try {
     const inventory = await Inventory.find().sort({ itemType: 1 });
@@ -71,9 +64,7 @@ router.get("/inventory", adminAuth, async (req, res) => {
   }
 });
 
-/**
- * UPDATE inventory quantity (Admin only)
- */
+// Update Inventory
 router.put("/inventory/:id", adminAuth, async (req, res) => {
   try {
     const { quantity } = req.body;

@@ -2,10 +2,7 @@ const express = require("express");
 const Pizza = require("../models/Pizza");
 const router = express.Router();
 
-/**
- * GET /api/pizzas
- * Public route – fetch all available pizzas
- */
+// Fetch all pizzas
 router.get("/", async (req, res) => {
   try {
     const pizzas = await Pizza.find();
